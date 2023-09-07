@@ -1,0 +1,32 @@
+.box {
+  display: block;
+  border: var(--border-thin) solid var(--color-border);
+  border-radius: var(--border-radius-sz0);
+  padding: var(--s0, 1rem);
+  /*color: var(--color-dark);*/
+  /*background-color: var(--color-light);*/
+}
+
+.box * {
+  /*color: inherit;*/
+}
+
+.box.invert {
+  color: var(--color-light);
+  background-color: var(--color-dark);
+}
+
+.box-borderless {
+  display: block;
+  border: 0 solid;
+  border-radius: var(--border-radius-sz0);
+  padding: var(--s0, 1rem);
+  outline: var(--border-thin) solid transparent;
+  outline-offset: calc(var(--border-thin) * -1);
+  /*color: var(--color-dark);*/
+  /*background-color: var(--color-light);*/
+}
+
+.box-borderless * {
+  /*color: inherit;*/
+}

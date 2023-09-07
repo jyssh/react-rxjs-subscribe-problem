@@ -1,0 +1,10 @@
+.kv-list {
+  --column-gap: var(--s0, 1rem);
+  --row-gap: var(--s-2, 0.25rem);
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: var(--column-gap);
+  row-gap: var(--row-gap);
+  /*align-self: start;*/
+  /*justify-content: start;*/
+}

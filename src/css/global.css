@@ -1,0 +1,727 @@
+:root {
+  --base-size: 1rem;
+
+  /* Use a modular scale based on Major Third.
+     * Ref: https://every-layout.dev/rudiments/modular-scale/
+     * See https://type-scale.com and https://www.modularscale.com/
+     * to play with other values.
+     */
+  --ratio: 1.25;
+  --measure: 60ch;
+  --line-height-as-variable: 1.25em; /* Same as ratio */
+  line-height: var(--ratio);
+
+  /* Set size variables to be used for TYPOGRAPHY and SPACING.
+     * We need so many for backward compatibility.
+     * Most of them should be weeded out gradually.
+     */
+  --s-6: calc(var(--s-5) / var(--ratio));
+  --s-5: calc(var(--s-4) / var(--ratio));
+  --s-4: calc(var(--s-3) / var(--ratio));
+  --s-3: calc(var(--s-2) / var(--ratio));
+  --s-2: calc(var(--s-1) / var(--ratio));
+  --s-1: calc(var(--s0) / var(--ratio));
+  --s0: var(--base-size);
+  --s1: calc(var(--s0) * var(--ratio));
+  --s2: calc(var(--s1) * var(--ratio));
+  --s3: calc(var(--s2) * var(--ratio));
+  --s4: calc(var(--s3) * var(--ratio));
+  --s5: calc(var(--s4) * var(--ratio));
+
+  --border-radius-sz0: 0.25rem;
+  --border-radius-sz1: 0.5rem;
+  --border-radius-sz2: 0.75rem;
+  --border-radius-sz3: 1rem;
+
+  --border-thin: 1px;
+  --border-thick: 2px;
+  --outline-thin: 1px;
+  --outline-thick: 2px;
+
+  --color-primary: #4c9e00;
+  --color-danger: #951b1e;
+  --color-attention: #d47024;
+  --color-disabled: #dcdcdf;
+  --color-border: #bebebe;
+  --color-secondary: #226398;
+
+  /* light/dark instead of bg/fg.
+     * Read as light fg on dark bg and vice versa.
+     */
+  --color-dark: #222;
+  --color-light: white;
+
+  --font-family-heading: Foco, Arial, sans-serif;
+  --font-family-body: "Museo Sans", Arial, sans-serif;
+
+  --input-text-default-height: 2.25rem;
+  --input-text-default-width: 18rem;
+  --input-text-padding: var(--s-5);
+  --textarea-default-height: 10rem;
+  --input-text-border-color: #465f70;
+  --input-text-placeholder-color: #bebebe;
+
+  --header-height: 70px;
+  --footer-height: 50px;
+  --secondary-button-height: 18px;
+  --dropdown-max-height: 12rem;
+  --opacity-on-hover: 0.85;
+  --appbody-container-padding: var(--s0);
+
+  --button-border-radius-small: var(--border-radius-sz0);
+  --button-border-radius-large: var(--s2);
+
+  --input-set-width: 22rem;
+
+  --alignment-value-on-comparison-page: var(--s-1);
+  --alignment-value-on-comparison-page2: var(--s-3);
+
+  --widget-minimum-size: 400px;
+  --underline-offset: 3px;
+
+  --duet-color-primary: var(--color-primary);
+  --duet-color-text: var(--color-dark);
+  --duet-color-text-active: #fff;
+  --duet-color-placeholder: var(--input-text-placeholder-color);
+  --duet-color-button: #f5f5f5;
+  --duet-color-surface: #fff;
+  --duet-color-overlay: rgba(0, 0, 0, 0.8);
+  --duet-color-border: #333;
+
+  --duet-font: var(--font-family-body);
+  --duet-font-normal: 400;
+  --duet-font-bold: 600;
+
+  --duet-radius: var(--border-radius-sz0);
+  --duet-z-index: 600;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+* {
+  max-inline-size: var(--measure, 60ch);
+}
+
+/*
+The point of using measure is to limit each column of *content* to a readable length.
+There might as well be multiple such columns horizontally.
+Each column length ideally is equal to the value of the measure. ￼
+So the exceptions to the rule that applies measure should be those elements which could be used to lay out horizontal columns of content. ￼
+ */
+html,
+body,
+section,
+nav,
+header,
+footer,
+ol,
+ul,
+dl,
+menu,
+main,
+div,
+form,
+fieldset,
+hgroup,
+h1,
+table,
+tbody,
+tr,
+canvas,
+svg {
+  max-inline-size: none;
+}
+
+ul,
+menu {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  max-inline-size: 60ch;
+  margin: auto;
+  padding: 1rem;
+}
+
+/* Form elements don't inherit font-family: https://stackoverflow.com/a/26140154/663911 */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+/* Both <button> and <a> are grouped as actions.
+ * Styling both of them revolves around how much emphasis an element needs.
+ * 4 levels of emphasis are used: cta, normal, inline, plain
+ * Apart from them, a emphasis of 'destructive' is used laterally.
+ * Styles are in order of: plain, inline, normal, cta, destructive.
+ * Styles are grouped by state: normal, disabled, hover
+ */
+
+.plain {
+  text-decoration: none;
+}
+
+a,
+.inline,
+.plain {
+  font-weight: 500;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  background: none;
+  box-shadow: none;
+  color: var(--color-primary);
+}
+
+a,
+.inline {
+  text-decoration: underline solid var(--color-primary) 2px;
+  text-underline-offset: var(--underline-offset);
+  text-decoration-skip-ink: none;
+}
+
+button,
+.normal {
+  font-weight: 500;
+  padding: var(--s-3) var(--s0);
+  border: none;
+  box-shadow: 0 1px 1px 0 #bebebe;
+
+  background-color: #e9e9ed;
+  color: var(--color-primary);
+}
+
+.cta {
+  font-weight: 500;
+  padding: var(--s-3) var(--s0);
+  border-radius: 5px;
+  border: none;
+  background-color: var(--color-primary);
+  color: var(--color-light);
+}
+
+.destructive,
+.cta.destructive {
+  background-color: #e9e9ed;
+  color: var(--color-danger);
+}
+
+a.cta,
+a.normal {
+  display: inline-block;
+  text-decoration: none;
+}
+
+button:disabled,
+button.normal:disabled,
+button.cta:disabled {
+  opacity: 0.35;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+a:not(:disabled):hover,
+.inline:not(:disabled):hover,
+.plain:not(:disabled):hover {
+  text-decoration: underline solid var(--color-primary) 3px;
+  text-decoration-skip-ink: none;
+}
+
+.plain[aria-current="page"] {
+  text-decoration: underline solid var(--color-primary) 3px;
+}
+
+button.normal:not(:disabled):hover {
+  background-color: rgb(208, 208, 215);
+}
+
+button.cta:not(:disabled):hover {
+  background-color: #3e8301;
+}
+
+button.destructive:not(:disabled):hover {
+  background-color: rgb(208, 208, 215);
+}
+
+a.cta:not(:disabled):hover {
+  text-decoration-color: var(--color-light);
+}
+
+a.destructive:not(:disabled):hover {
+  text-decoration-color: var(--color-danger);
+}
+
+button.close {
+  /* TODO: Turn this into .plain button with svg .icon inside. */
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  /* http://adrianroselli.com/2017/05/under-engineered-custom-radio-buttons-and-checkboxen.html */
+  position: absolute;
+  top: auto;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  width: 1px;
+  height: 1px;
+  white-space: nowrap;
+}
+
+input[type="radio"] + label,
+input[type="checkbox"] + label {
+  /*font-size: var(--s-1);*/
+  position: relative;
+  display: inline-block;
+  padding-left: 1.5em;
+  /*max-width: calc(100% - 2em);*/
+}
+
+input[type="radio"] + label::before,
+input[type="checkbox"] + label::before {
+  content: "";
+  background: #fff;
+  border: 0.2em solid black;
+  display: block;
+  box-sizing: border-box;
+  float: left;
+  width: 1em;
+  height: 1em;
+  margin-left: -1.5em;
+  margin-top: 0.15em;
+  vertical-align: top;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.1s linear;
+}
+
+input[type="radio"] + label::before {
+  border-radius: 100%;
+}
+
+input[type="radio"]:disabled + label::before,
+input[type="checkbox"]:disabled + label::before {
+  border: 0.1em solid rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+input[type="radio"]:checked + label::before {
+  border: var(--border-thick) solid var(--color-primary);
+  background-color: var(--color-primary);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.95);
+}
+
+input[type="checkbox"] + label::after {
+  display: block;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0.25em;
+  width: 0.4em;
+  height: 0.8em;
+  transform: rotate(0deg);
+  transition: border 0.1s linear;
+}
+
+input[type="checkbox"]:checked + label::after {
+  top: 0.2em;
+  left: 0.3em;
+  width: 0.4em;
+  height: 0.8em;
+  border-right: 0.2em solid var(--color-primary);
+  border-bottom: 0.2em solid var(--color-primary);
+  transform: rotate(45deg);
+  transition: border 0.1s linear;
+}
+
+input[type="checkbox"]:checked + label::before {
+  border: 0.125em solid var(--color-primary);
+}
+
+input[type="checkbox"]:disabled + label::after {
+  border: none;
+}
+
+input[type="checkbox"]:checked:disabled + label::after {
+  border-right: 0.25em solid var(--color-primary);
+  border-bottom: 0.25em solid var(--color-primary);
+}
+
+*[dir="rtl"] input[type="radio"] + label,
+*[dir="rtl"] input[type="checkbox"] + label {
+  padding-left: 0.5em;
+  padding-right: 2em;
+}
+
+*[dir="rtl"] input[type="radio"] + label::before,
+*[dir="rtl"] input[type="checkbox"] + label::before {
+  float: right;
+  margin-left: 0;
+  margin-right: -1.5em;
+}
+
+*[dir="rtl"] input[type="checkbox"] + label::after {
+  left: auto;
+  right: 0.5em;
+}
+
+*[dir="rtl"] input[type="checkbox"]:checked + label::after {
+  left: auto;
+  right: 0.7em;
+}
+
+input[type="checkbox"][tabindex="-1"] {
+  /* honeypot input */
+  display: none;
+}
+
+input[type="checkbox"][tabindex="-1"] + label {
+  display: none;
+}
+
+input:not([type="checkbox"]):not([type="file"]):not([type="image"]):not(
+    [type="radio"]
+  ):not([type="range"]),
+textarea,
+select {
+  background-color: #fff;
+  border: var(--border-thick) solid var(--input-text-border-color);
+  border-radius: var(--border-radius-sz0);
+  inline-size: 100%;
+}
+
+input:not([type="checkbox"]):not([type="file"]):not([type="image"]):not(
+    [type="radio"]
+  ):not([type="range"]),
+select {
+  height: var(--input-text-default-height);
+  padding: 0 0 0 var(--input-text-padding);
+}
+
+textarea {
+  height: var(--textarea-default-height);
+  padding: var(--input-text-padding);
+}
+
+:is(
+    input:not([type="checkbox"]):not([type="file"]):not([type="image"]):not(
+        [type="radio"]
+      ):not([type="range"]),
+    textarea,
+    select
+  ):focus {
+  border: var(--border-thick) solid var(--color-primary);
+  outline: var(--outline-thin) solid var(--color-primary);
+}
+
+:is(
+    input:not([type="checkbox"]):not([type="file"]):not([type="image"]):not(
+        [type="radio"]
+      ):not([type="range"]),
+    textarea,
+    select
+  ):disabled {
+  border-color: #bebebe;
+  outline-color: #bebebe;
+  background-color: #dcdcdf;
+}
+
+:is(
+    input:not([type="checkbox"]):not([type="file"]):not([type="image"]):not(
+        [type="radio"]
+      ):not([type="range"]),
+    textarea,
+    select
+  )::placeholder {
+  color: var(--input-text-placeholder-color);
+}
+
+input[type="text"][readonly] {
+  border: none;
+  padding: 0;
+}
+
+label {
+  display: block;
+}
+
+label + input {
+  margin-block-start: var(--s-6);
+}
+
+input[type="radio"] + label.as-card:before,
+input[type="radio"] + label.as-card:after {
+  display: none;
+}
+
+input[type="radio"] + label.as-card {
+  display: flex;
+  padding-inline-start: 0;
+  border: var(--border-thin) solid #bebebe;
+}
+
+input[type="radio"] + label.as-card:hover {
+  outline: var(--outline-thin) solid #bebebe;
+  box-shadow: 0 0 2px 2px #bebebe;
+}
+
+input[type="radio"] + label.as-card > img {
+  width: 100%;
+  height: auto;
+}
+
+input[type="radio"]:checked + label.as-card {
+  border: var(--border-thick) solid;
+}
+
+.editable label {
+  display: inline;
+  margin-inline-end: var(--s-5);
+}
+
+fieldset {
+  border: none;
+}
+
+body {
+  background-color: var(--color-light);
+  font-family: var(--font-family-body);
+  padding-bottom: var(--footer-height);
+}
+
+body > header,
+body :not(:is(article, aside, main, nav, section)) header {
+  /* This selector targets the (hopefully only, because there should be only one header in the context of the body element), header element acting for body. */
+  /* Why not do <header role='banner'> for the page header and then target it in CSS with [role='banner']?
+     * header in context of body element gets an implicit banner landmark.
+     */
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  box-shadow: 0 0 10px -6px #222222;
+  background-color: var(--color-light);
+}
+
+body > footer,
+body :not(:is(article, aside, main, nav, section)) footer {
+  /* Why not do <footer role='contentinfo'> for the page footer and then target it in CSS with [role='contentinfo']?
+     * footer in context of body gets an implicit contentinfo landmark.
+     */
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: var(--footer-height);
+  background-color: var(--color-dark);
+  color: var(--color-light);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-family-heading);
+}
+
+h1 {
+  font-size: var(--s4);
+}
+
+h2 {
+  font-size: var(--s3);
+}
+
+h3 {
+  font-size: var(--s2);
+}
+
+h4 {
+  font-size: var(--s1);
+}
+
+h5 {
+  font-size: var(--s1);
+}
+
+h6 {
+  font-size: var(--s0);
+}
+
+hgroup > h1 ~ p {
+  margin-inline: auto;
+  text-align: center;
+}
+
+hgroup > h2 ~ p {
+  margin-block-start: 0;
+}
+
+summary > * {
+  display: inline;
+}
+
+summary > *:first-child {
+  margin-inline-start: var(--s-6);
+  vertical-align: middle;
+}
+
+table {
+  border-collapse: collapse;
+}
+[id^="Error-"] > li {
+  /* todo: this and its sibling rules should be applicable to any element like <p>, not just <li> */
+  color: var(--color-danger);
+  display: flex;
+  gap: var(--s-4);
+}
+
+[id^="Error-"] > li:before {
+  content: "⚠";
+  color: var(--color-danger);
+}
+
+[id^="Attention-"] > li {
+  display: flex;
+  gap: var(--s-4);
+}
+
+[id^="Attention-"] > li:before {
+  content: "⚠";
+  color: var(--color-attention);
+}
+
+progress:indeterminate {
+  vertical-align: middle;
+  width: 2rem;
+  max-height: 1rem; /* Otherwise it looks gigantic when used inside(?) h1 tag */
+  margin-inline-end: var(--s-3);
+  /* There is no currently way to change the secondary colour (background one).
+     * While changing the accent-color, test well the result on Safari, Chrome and Firefox.
+     * Firefox handles it the best. */
+  accent-color: green;
+}
+
+.waiting:before {
+  /* We may need this code to customize progress element in future. */
+  content: " ";
+  display: inline-flex;
+  width: 2rem;
+  height: 0.5rem;
+  margin-right: var(--s-3);
+  border-radius: var(--border-radius-sz0);
+  animation: loading-indicator 1.2s linear infinite;
+  background: linear-gradient(
+    to right,
+    var(--color-primary) 15%,
+    var(--color-disabled) 15%
+  );
+  background-size: 200% 100%;
+}
+
+@keyframes loading-indicator {
+  0% {
+    background-position-x: 15%;
+  }
+  100% {
+    background-position-x: -100%;
+  }
+}
+
+ol {
+  /* TODO: This makes ol less accessible by default to sighted users. */
+  list-style: none;
+}
+
+fieldset > legend {
+  font-size: 1.125em;
+  font-weight: 500;
+}
+
+[role="tablist"] {
+  display: flex;
+  border-block-end: var(--border-thick) solid #f1f0f2;
+  gap: var(--s-3);
+  list-style: none;
+}
+
+[role="tablist"] [role="tab"] {
+  display: block;
+  padding: var(--s-2) var(--s-1);
+  text-decoration: none;
+
+  color: var(--color-primary);
+  background-color: #f1f0f2;
+  border: var(--border-thick) solid transparent;
+  border-block-end: none;
+  border-start-start-radius: var(--border-radius-sz0);
+  border-start-end-radius: var(--border-radius-sz0);
+
+  position: relative;
+  top: var(--border-thick); /* Hide the tab-bar border. */
+}
+
+[role="tablist"] [role="tab"][aria-selected="true"] {
+  color: var(--color-primary);
+  background-color: white;
+  border: var(--border-thick) solid var(--color-primary);
+  border-block-end: none;
+  box-shadow: 0 -5px 10px -5px var(--color-primary);
+}
+
+.visually-hidden {
+  /* https://piccalil.li/quick-tip/visually-hidden/ */
+  /* https://gist.github.com/Heydon/c8d46c0dd18ce96b5833b3b564e9f472 */
+
+  /* .visually-hidden {} to hide visually, but keep available to screenreaders. */
+  /* [aria-hidden="true"] to hide from screenreader, but keep visually available. */
+  /* [hidden] {} to hide from both. */
+
+  position: absolute !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  clip-path: inset(100%) !important;
+
+  height: 1px !important;
+  width: 1px !important;
+  overflow: hidden !important;
+
+  white-space: nowrap !important;
+}
+
+[hidden] {
+  /* [hidden] {} to hide both visually and from screenreaders. */
+  display: none;
+}
+
+input:not([type="checkbox"]):not([type="file"]):not([type="image"]):not(
+    [type="radio"]
+  ):not([type="range"])[aria-invalid="true"],
+textarea[aria-invalid="true"],
+select[aria-invalid="true"] {
+  border: var(--border-thick) solid var(--color-danger);
+  background-color: #951b1e12;
+}
+
+
+input[type="radio"] + label:not(.as-card) > * {
+  /* TODO: Improve this rule. */
+  /* While this rule works for Select the Payout Type, it messes up the Choose your Risk cards without the :not() selector. */
+  display: block;
+}
+
+.error {
+  color: red;
+}

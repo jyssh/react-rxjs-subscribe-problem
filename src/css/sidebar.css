@@ -1,0 +1,74 @@
+.with-sidebar {
+  --sidebar-width: auto;
+  --sidebar-main-min-width: 50%; /* Must be in percentage. */
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s0, 1rem);
+  align-items: flex-start; /* NOTE: sets the height of each flex item to fit to its content. */
+}
+
+.with-sidebar > :first-child {
+  flex-basis: var(--sidebar-width);
+  flex-grow: 1;
+}
+
+.with-sidebar > :last-child {
+  flex-basis: 0;
+  flex-grow: 999;
+  min-inline-size: var(--sidebar-main-min-width);
+}
+
+.with-sidebar-right {
+  --sidebar-gap: var(--s0, 1rem);
+  --sidebar-width: auto;
+  --sidebar-main-min-width: 50%; /* Must be in percentage. */
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sidebar-gap);
+  align-items: flex-start; /* NOTE: sets the height of each flex item to fit to its content. */
+}
+
+.with-sidebar-right > :first-child {
+  flex-basis: 0;
+  flex-grow: 999;
+  min-inline-size: var(--sidebar-main-min-width);
+}
+
+.with-sidebar-right > :last-child {
+  flex-basis: var(--sidebar-width);
+  flex-grow: 1;
+}
+
+.cf--sidebar-main-min-width\:40pc {
+  --sidebar-main-min-width: 40%;
+}
+
+.cf--sidebar-main-min-width\:30pc {
+  --sidebar-main-min-width: 30%;
+}
+
+.cf--sidebar-main-min-width\:20pc {
+  --sidebar-main-min-width: 20%;
+}
+
+.cf--sidebar-main-min-width\:45pc {
+  --sidebar-main-min-width: 45%;
+}
+
+.cf--sidebar-width\:measure {
+  --sidebar-width: var(--measure);
+}
+
+.cf--sidebar-width\:measure\*0\.7 {
+  --sidebar-width: calc(var(--measure) * 0.75);
+}
+
+.cf--sidebar-width\:50pc {
+  --sidebar-width: 50%;
+}
+
+.cf--sidebar-main-min-width\:measure\*0\.75 {
+  --sidebar-main-min-width: calc(var(--measure) * 0.75);
+}

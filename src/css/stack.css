@@ -1,0 +1,53 @@
+/* children are stacked and stretched. */
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+[class^="stack"] > * {
+  margin-block: 0;
+}
+
+.stack > * + * {
+  --stack-gap: var(--s0, 1rem);
+
+  margin-block-start: var(--stack-gap);
+}
+
+.cf--stack-gap\:s3 > * + * {
+  --stack-gap: var(--s3);
+}
+
+.cf--stack-gap\:s-3 > * + * {
+  --stack-gap: var(--s-3);
+}
+
+.cf--stack-gap\:s-5 > * + * {
+  --stack-gap: var(--s-5);
+}
+
+.cf--stack-gap\:s-6 > * + * {
+  --stack-gap: var(--s-6);
+}
+
+.cf--stack-gap\:0 > * + * {
+  --stack-gap: 0;
+}
+
+.cf--stack-gap\:s-1 > * + * {
+  --stack-gap: var(--s-1);
+}
+
+.cf--stack-gap\:s-2 > * + * {
+  --stack-gap: var(--s-2);
+}
+
+.cf--stack-gap\:s2 > * + * {
+  --stack-gap: var(--s2);
+}
+
+.cf--stack-split {
+  margin-block-start: auto;
+}

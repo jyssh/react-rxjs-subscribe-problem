@@ -1,0 +1,14 @@
+.cluster {
+  --cluster-gap: var(--s0, 1rem);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cluster-gap);
+}
+
+.cf--cluster-split {
+  margin-inline-start: auto;
+}
+
+.cf--cluster-gap\:s-6 {
+  --cluster-gap: var(--s-6);
+}
