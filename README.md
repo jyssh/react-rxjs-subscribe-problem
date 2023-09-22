@@ -1,3 +1,5 @@
+Resolved: https://github.com/re-rxjs/react-rxjs/issues/308
+
 # Problem
 
 `<Subscribe>` wraps two screens - `<SelectCropScreen>` and `<One>`. Check the `Yield.jsx` file to verify.
